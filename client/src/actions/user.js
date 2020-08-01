@@ -43,3 +43,12 @@ export const editUser = (formValues) => async (dispatch) => {
   });
   history.push("/profile");
 };
+
+export const editAvatar = (formdata) => async (dispatch) => {
+  await axios.post("/api/users/me/avatar", formdata);
+  dispatch({
+    type: "EDIT_AVATAR",
+    // payload: user.data,
+  });
+  history.push("/profile");
+};

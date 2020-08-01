@@ -1,4 +1,11 @@
-import { loginUser, addUser, getUser, logoutUser, editUser } from "./user";
+import {
+  loginUser,
+  addUser,
+  getUser,
+  logoutUser,
+  editUser,
+  editAvatar,
+} from "./user";
 import { myPosts, getPostsByUserName } from "./posts";
 import {
   createPost,
@@ -41,4 +48,5 @@ export {
   sendRequest,
   getFollowers,
   getFollowing,
+  editAvatar,
 };

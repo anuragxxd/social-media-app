@@ -45,7 +45,7 @@ class PostCard extends Component {
             {moment(this.props.createdAt).endOf("min").fromNow()}
           </div>
           <Link to={`/users/${this.props.owner}`} style={{ color: "black" }}>
-            <img className="ui avatar image" src="/image/img.jpeg" />{" "}
+            {" "}
             {this.props.owner}
           </Link>
         </div>

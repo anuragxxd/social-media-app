@@ -3,6 +3,8 @@ const express = require("express");
 const auth = require("../middlewares/auth");
 const router = new express.Router();
 const Post = require("../models/post");
+const multer = require("multer");
+const sharp = require("sharp");
 
 router.post("/api/users", async (req, res) => {
   try {
@@ -104,5 +106,41 @@ router.get("/api/users/find/:query", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+const upload = multer({
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, cb) {
+    if (
+      !(
+        file.originalname.endsWith(".jpg") ||
+        file.originalname.endsWith(".jpeg") ||
+        file.originalname.endsWith(".png")
+      )
+    ) {
+      return cb(new Error("Provide an image"));
+    }
+    cb(undefined, true);
+  },
+});
+
+router.post(
+  "/api/users/me/avatar",
+  auth,
+  upload.single("avatar"),
+  async (req, res) => {
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
+    req.user.avatar = buffer;
+    await req.user.save();
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
 
 module.exports = router;

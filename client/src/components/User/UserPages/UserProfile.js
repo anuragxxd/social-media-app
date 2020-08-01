@@ -27,6 +27,12 @@ class Profile extends Component {
     }
   };
 
+  toBase64 = (arr) => {
+    return btoa(
+      arr.reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+  };
+
   onFollowClick = async () => {
     if (this.state.follow == "Follow") {
       this.setState({ follow: "Requested" });
@@ -68,7 +74,12 @@ class Profile extends Component {
         >
           <div className="item">
             <div className="image">
-              <img style={{ borderRadius: "10px" }} src="/image/img.jpeg" />
+              <img
+                style={{ borderRadius: "10px" }}
+                src={`data:image/gif;base64,${this.toBase64(
+                  this.props.user.avatar.data
+                )}`}
+              />
             </div>
             <div className="content">
               <h4 className="header">

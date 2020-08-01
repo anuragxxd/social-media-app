@@ -34,8 +34,7 @@ class PostCard extends Component {
         <div className="content">
           <div className="right floated meta">
             {moment(this.props.createdAt).endOf("min").fromNow()}
-          </div>
-          <img className="ui avatar image" src="/image/img.jpeg" />{" "}
+          </div>{" "}
           {this.props.owner}
         </div>
         <Link to={`post/${this.props.id}`} className="image">

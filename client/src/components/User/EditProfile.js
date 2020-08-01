@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { getUser, editUser } from "../../actions";
+import { getUser, editUser, editAvatar } from "../../actions";
 import { Link } from "react-router-dom";
 import BackTo from "../Headers/BackTo";
 
 class EditProfile extends Component {
+  state = {
+    image: null,
+  };
+
   renderInitialInput = (iv) => {
     if (iv) {
       return <input readOnly value={iv} />;
@@ -53,8 +57,27 @@ class EditProfile extends Component {
     );
   };
 
+  renderImage() {
+    return (
+      <div class="field">
+        <label>Avatar</label>
+        <input type="file" onChange={(e) => this.handleChange(e)} />
+      </div>
+    );
+  }
+
+  handleChange = async (e) => {
+    const file = e.target.files[0];
+    await this.setState({ image: file });
+  };
+
   onSubmit = (formValues) => {
     this.props.editUser(formValues);
+    if (this.state.image) {
+      let formdata = new FormData();
+      formdata.append("avatar", this.state.image);
+      this.props.editAvatar(formdata);
+    }
   };
 
   render() {
@@ -67,7 +90,7 @@ class EditProfile extends Component {
         <div className="ui container" style={{ paddingTop: "20px" }}>
           <div
             class="ui placeholder segment"
-            style={{ height: "700px", backgroundColor: "#FFFFFF" }}
+            style={{ height: "750px", backgroundColor: "#FFFFFF" }}
           >
             <div class="column">
               <form
@@ -111,6 +134,7 @@ class EditProfile extends Component {
                   placeholder="Don't exceed 50 words."
                   iv={this.props.user.caption || ""}
                 ></Field>
+                {this.renderImage()}
                 {/* <Field
                   name="password"
                   component={this.renderInput}
@@ -139,7 +163,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-EditProfile = connect(mapStateToProps, { getUser, editUser })(EditProfile);
+EditProfile = connect(mapStateToProps, { getUser, editUser, editAvatar })(
+  EditProfile
+);
 
 export default reduxForm({
   form: "editProfile",

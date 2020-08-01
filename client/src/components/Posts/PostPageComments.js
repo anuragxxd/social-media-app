@@ -15,9 +15,9 @@ class PostPageComments extends Component {
           <Link to={`/users/${userName}`} class="author">
             {userName}
           </Link>
-          <div class="metadata">
+          {/* <div class="metadata">
             <span class="date">Today at 5:42PM</span>
-          </div>
+          </div> */}
           <div class="text">{body}</div>
           {userName == this.props.myUserName ? (
             <div class="actions">

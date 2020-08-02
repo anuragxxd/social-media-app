@@ -30,7 +30,7 @@ class PostCard extends Component {
 
   render() {
     return (
-      <div className="ui fluid card">
+      <div className={`ui fluid card`}>
         <div className="content">
           <div className="right floated meta">
             {moment(this.props.createdAt).endOf("min").fromNow()}

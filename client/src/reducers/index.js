@@ -10,6 +10,7 @@ import querySearchUsers from "./querySearchUsers";
 import requestList from "./requestList";
 import followers from "./followers";
 import following from "./following";
+import feed from "./feed";
 
 export default combineReducers({
   form: formReducer,
@@ -23,4 +24,5 @@ export default combineReducers({
   requestList: requestList,
   followers: followers,
   following: following,
+  feed: feed,
 });

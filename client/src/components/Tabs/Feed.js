@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUser } from "../../actions";
 import Main from "../Headers/Main";
+import FeedPostList from "../Feed/FeedPostList";
 
 class Feed extends Component {
   async componentDidMount() {
@@ -13,6 +14,7 @@ class Feed extends Component {
     return (
       <div>
         <Main></Main>
+        <FeedPostList></FeedPostList>
       </div>
     );
   }

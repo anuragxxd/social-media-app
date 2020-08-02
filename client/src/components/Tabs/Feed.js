@@ -5,7 +5,9 @@ import Main from "../Headers/Main";
 
 class Feed extends Component {
   async componentDidMount() {
-    await this.props.getUser();
+    if (!this.props.user || this.props.user.length == 0) {
+      await this.props.getUser();
+    }
   }
   render() {
     return (

@@ -87,7 +87,11 @@ router.post(
     await post.save();
     user.posts = user.posts + 1;
     await user.save();
-    res.send();
+    const posts = await Post.find({ owner: user.userName });
+    var filter = posts.filter((post) => {
+      return Buffer.isBuffer(post.image);
+    });
+    res.send(filter);
   },
   (error, req, res, next) => {
     res.status(400).send({ error: error.message });

@@ -15,14 +15,9 @@ class Logout extends Component {
     );
   };
   renderUser = (user) => {
-    console.log(user);
     return (
-      <Link
-        to={`/users/${user.userName}`}
-        class="item"
-        style={{ color: "black" }}
-      >
-        <div class="middle aligned content">{user.userName}</div>
+      <Link to={`/users/${user}`} class="item" style={{ color: "black" }}>
+        <div class="middle aligned content">{user}</div>
       </Link>
     );
   };

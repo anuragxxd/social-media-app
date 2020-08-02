@@ -11,12 +11,8 @@ class Followers extends Component {
   }
   renderUser = (user) => {
     return (
-      <Link
-        to={`/users/${user.requestedBy}`}
-        class="item"
-        style={{ color: "black" }}
-      >
-        <div class="middle aligned content">{user.requestedBy}</div>
+      <Link to={`/users/${user}`} class="item" style={{ color: "black" }}>
+        <div class="middle aligned content">{user}</div>
       </Link>
     );
   };
@@ -38,7 +34,7 @@ class Followers extends Component {
   render() {
     return (
       <Modal
-        title="Following"
+        title="Followers"
         description={this.renderContent()}
         onDismiss={() => history.goBack()}
       ></Modal>

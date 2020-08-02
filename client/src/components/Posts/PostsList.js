@@ -5,7 +5,9 @@ import { myPosts } from "../../actions";
 
 class PostsList extends Component {
   async componentDidMount() {
-    await this.props.myPosts();
+    if (!this.props.myPost || this.props.myPost.length == 0) {
+      await this.props.myPosts();
+    }
   }
   toBase64 = (arr) => {
     return btoa(

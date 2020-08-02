@@ -100,7 +100,10 @@ router.get("/api/:userName/followers", auth, async (req, res) => {
       requestedTo: req.params.userName,
       status: 1,
     });
-    res.send(followers);
+    const userNames = await followers.map((follower) => {
+      return follower.requestedBy;
+    });
+    res.send(userNames);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -112,7 +115,10 @@ router.get("/api/:userName/following", auth, async (req, res) => {
       requestedBy: req.params.userName,
       status: 1,
     });
-    res.send(following);
+    const userNames = await following.map((follow) => {
+      return follow.requestedTo;
+    });
+    res.send(userNames);
   } catch (e) {
     res.status(500).send(e);
   }

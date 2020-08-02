@@ -11,12 +11,8 @@ class Following extends Component {
   }
   renderUser = (user) => {
     return (
-      <Link
-        to={`/users/${user.requestedTo}`}
-        class="item"
-        style={{ color: "black" }}
-      >
-        <div class="middle aligned content">{user.requestedTo}</div>
+      <Link to={`/users/${user}`} class="item" style={{ color: "black" }}>
+        <div class="middle aligned content">{user}</div>
       </Link>
     );
   };

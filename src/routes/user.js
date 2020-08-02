@@ -101,7 +101,10 @@ router.get("/api/users/find/:query", auth, async (req, res) => {
     const users = await User.find({
       userName: { $regex: req.params.query, $options: "i" },
     });
-    res.send(users);
+    const userNames = await users.map((user) => {
+      return user.userName;
+    });
+    res.send(userNames);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -136,7 +139,7 @@ router.post(
       .toBuffer();
     req.user.avatar = buffer;
     await req.user.save();
-    res.send();
+    res.send(req.user);
   },
   (error, req, res, next) => {
     res.status(400).send({ error: error.message });

@@ -12,6 +12,8 @@ export default (state = [], action) => {
       return [];
     case "EDIT_USER":
       return action.payload;
+    case "EDIT_AVATAR":
+      return action.payload;
     default:
       return state;
   }

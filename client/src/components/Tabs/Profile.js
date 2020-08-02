@@ -7,7 +7,9 @@ import Posts from "../Posts/Posts";
 
 class Profile extends Component {
   async componentDidMount() {
-    await this.props.getUser();
+    if (!this.props.user || this.props.user.length == 0) {
+      await this.props.getUser();
+    }
   }
 
   toBase64 = (arr) => {

@@ -21,6 +21,7 @@ export const uploadImage = (id, formdata) => async (dispatch) => {
   const response = await axios.post(`/api/post/${id}/image`, formdata);
   dispatch({
     type: "UPLOAD_IMAGE",
+    payload: response.data,
   });
   history.push("/profile");
 };

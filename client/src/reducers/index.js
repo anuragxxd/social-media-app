@@ -11,6 +11,7 @@ import requestList from "./requestList";
 import followers from "./followers";
 import following from "./following";
 import feed from "./feed";
+import feedPage from "./feedPage";
 
 export default combineReducers({
   form: formReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
   followers: followers,
   following: following,
   feed: feed,
+  feedPage: feedPage,
 });

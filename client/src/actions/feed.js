@@ -8,3 +8,9 @@ export const getFeed = (page, limit) => async (dispatch) => {
     payload: posts.data,
   });
 };
+
+export const addFeedPage = () => async (dispatch) => {
+  dispatch({
+    type: "ADD_FEEDPAGE",
+  });
+};

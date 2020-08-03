@@ -1,20 +1,28 @@
 import React, { Component } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { connect } from "react-redux";
-import { getFeed } from "../../actions";
+import { getFeed, addFeedPage } from "../../actions";
 import PostCard from "../Posts/PostCard";
 
 class FeedPostList extends Component {
   state = {
-    page: 1,
     limit: 3,
+    hasMore: true,
   };
   async componentDidMount() {
-    await this.props.getFeed(this.state.page, this.state.limit);
+    if (this.props.page == 1) {
+      await this.props.getFeed(this.props.page, this.state.limit);
+    }
+    if (this.props.feed.length != this.state.limit * this.props.page) {
+      this.setState({ hasMore: false });
+    }
   }
   fetchPosts = async () => {
-    await this.setState({ page: this.state.page + 1 });
-    await this.props.getFeed(this.state.page, this.state.limit);
+    await this.props.addFeedPage();
+    await this.props.getFeed(this.props.page, this.state.limit);
+    if (this.props.feed.length != this.state.limit * this.props.page) {
+      this.setState({ hasMore: false });
+    }
   };
 
   toBase64 = (arr) => {
@@ -32,8 +40,13 @@ class FeedPostList extends Component {
         <InfiniteScroll
           dataLength={this.props.feed.length}
           next={this.fetchPosts}
-          hasMore={true}
+          hasMore={this.state.hasMore}
           loader={<h4>Loading..</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
         >
           {this.props.feed.map((post) => {
             return (
@@ -57,7 +70,8 @@ class FeedPostList extends Component {
 const mapStateToProps = (state) => {
   return {
     feed: state.feed,
+    page: state.feedPage,
   };
 };
 
-export default connect(mapStateToProps, { getFeed })(FeedPostList);
+export default connect(mapStateToProps, { getFeed, addFeedPage })(FeedPostList);

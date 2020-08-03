@@ -25,7 +25,7 @@ import {
   getFollowers,
   getFollowing,
 } from "./users";
-import { getFeed } from "./feed";
+import { getFeed, addFeedPage } from "./feed";
 
 export {
   loginUser,
@@ -51,4 +51,5 @@ export {
   getFollowing,
   editAvatar,
   getFeed,
+  addFeedPage,
 };

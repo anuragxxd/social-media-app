@@ -15,6 +15,7 @@ import Peoples from "./Tabs/Peoples";
 import Search from "./Peoples/Search";
 import Followers from "./User/Stats/Followers";
 import Following from "./User/Stats/Following";
+import Messages from "./Tabs/Messages";
 
 class App extends Component {
   render() {
@@ -48,6 +49,7 @@ class App extends Component {
               path="/following/:userName"
               component={Following}
             ></Route>
+            <Route exact path="/messages" component={Messages}></Route>
           </Switch>
         </div>
       </Router>

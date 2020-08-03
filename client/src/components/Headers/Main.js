@@ -8,7 +8,9 @@ class Main extends Component {
         <Link to="/feed" class="item">
           Feed
         </Link>
-        <Link class="item">Messages</Link>
+        <Link to="/messages" class="item">
+          Messages
+        </Link>
         <Link to="/peoples" class="item">
           Peoples
         </Link>

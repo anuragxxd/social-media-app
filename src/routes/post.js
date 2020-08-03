@@ -32,7 +32,9 @@ router.get("/api/post/:id", async (req, res) => {
 
 router.get("/api/posts/:userName", async (req, res) => {
   try {
-    const posts = await Post.find({ owner: req.params.userName });
+    const posts = await Post.find({ owner: req.params.userName }).sort({
+      createdAt: -1,
+    });
     var filter = posts.filter((post) => {
       return Buffer.isBuffer(post.image);
     });
@@ -44,7 +46,9 @@ router.get("/api/posts/:userName", async (req, res) => {
 
 router.get("/api/myPosts", auth, async (req, res) => {
   const user = await User.findById(req.user._id);
-  const posts = await Post.find({ owner: user.userName });
+  const posts = await Post.find({ owner: user.userName }).sort({
+    createdAt: -1,
+  });
   var filter = posts.filter((post) => {
     return Buffer.isBuffer(post.image);
   });

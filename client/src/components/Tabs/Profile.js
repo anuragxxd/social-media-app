@@ -6,21 +6,20 @@ import history from "../../history";
 import Posts from "../Posts/Posts";
 
 class Profile extends Component {
-  async componentDidMount() {
-    if (!this.props.user || this.props.user.length == 0) {
-      await this.props.getUser();
-    }
-  }
-
   toBase64 = (arr) => {
     return btoa(
       arr.reduce((data, byte) => data + String.fromCharCode(byte), "")
     );
   };
 
+  getUser = async () => {
+    await this.props.getUser();
+  };
+
   render() {
     console.log(this.props.user);
-    if (!this.props.user) {
+    if (!this.props.user || this.props.user.length == 0) {
+      this.getUser();
       return <div>Loading</div>;
     }
     return (

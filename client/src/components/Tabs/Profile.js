@@ -19,10 +19,9 @@ class Profile extends Component {
   };
 
   render() {
-    if (!this.props.user) {
+    console.log(this.props.user);
+    if (!this.props.user || !this.props.user.avatar) {
       return <div>Loading</div>;
-    } else if (!this.props.user.userName) {
-      return <div>Login First</div>;
     }
     return (
       <div>

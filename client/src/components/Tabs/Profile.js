@@ -4,6 +4,7 @@ import { getUser } from "../../actions";
 import Main from "../Headers/Main";
 import history from "../../history";
 import Posts from "../Posts/Posts";
+import img from "../../image/user.png";
 
 class Profile extends Component {
   toBase64 = (arr) => {
@@ -37,9 +38,13 @@ class Profile extends Component {
             <div className="image">
               <img
                 style={{ borderRadius: "10px" }}
-                src={`data:image/gif;base64,${this.toBase64(
-                  this.props.user.avatar.data
-                )}`}
+                src={
+                  this.props.user.avatar
+                    ? `data:image/gif;base64,${this.toBase64(
+                        this.props.user.avatar.data
+                      )}`
+                    : img
+                }
               />
             </div>
             <div className="content">

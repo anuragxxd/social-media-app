@@ -16,6 +16,7 @@ import Search from "./Peoples/Search";
 import Followers from "./User/Stats/Followers";
 import Following from "./User/Stats/Following";
 import Messages from "./Tabs/Messages";
+import Verify from "./Users/Verify";
 
 class App extends Component {
   render() {
@@ -50,6 +51,7 @@ class App extends Component {
               component={Following}
             ></Route>
             <Route exact path="/messages" component={Messages}></Route>
+            <Route exact path="/verify/:token" component={Verify}></Route>
           </Switch>
         </div>
       </Router>

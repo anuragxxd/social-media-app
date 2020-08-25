@@ -11,9 +11,14 @@ export const loginUser = (formValues) => async (dispatch) => {
 };
 
 export const addUser = (formValues) => async (dispatch) => {
-  const user = await axios.post("/api/users", formValues);
+  await axios.post("/api/users", formValues);
+};
+
+export const verifyUser = (token) => async (dispatch) => {
+  const user = await axios.post(`/api/verify/${token}`);
+  console.log(user.data);
   dispatch({
-    type: "ADD_USER",
+    type: "VERIFY_USER",
     payload: user.data,
   });
   history.push("/feed");

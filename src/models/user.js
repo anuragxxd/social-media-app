@@ -72,6 +72,10 @@ const UserSchema = new mongoose.Schema(
     avatar: {
       type: Buffer,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     tokens: [
       {
         token: {

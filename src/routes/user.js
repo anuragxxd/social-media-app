@@ -5,23 +5,33 @@ const router = new express.Router();
 const Post = require("../models/post");
 const multer = require("multer");
 const sharp = require("sharp");
+const { sendWelcomeEmail } = require("../emails/account");
+const jwt = require("jsonwebtoken");
 
 router.post("/api/users", async (req, res) => {
   try {
     const user = new User(req.body);
     await user.save();
     const token = await user.createToken();
-    res.cookie("token", token, {
-      // maxAge: 60 * 60 * 1000,
-      httpOnly: true,
-      // secure: true,
-      // sameSite: true,
-    });
-
+    sendWelcomeEmail(user.email, user.name, token);
     res.send({ user, token });
   } catch (e) {
     res.status(400).send(e);
   }
+});
+
+router.post("/api/verify/:token", async (req, res) => {
+  const decoded = jwt.verify(req.params.token, process.env.JWT_SECRET);
+  const user = await User.findById(decoded._id);
+  user.verified = true;
+  await user.save();
+  res.cookie("token", req.params.token, {
+    // maxAge: 60 * 60 * 1000,
+    httpOnly: true,
+    // secure: true,
+    // sameSite: true,
+  });
+  res.send(user);
 });
 
 router.get("/api/users/:userName", async (req, res) => {

@@ -5,6 +5,7 @@ import {
   logoutUser,
   editUser,
   editAvatar,
+  verifyUser,
 } from "./user";
 import { myPosts, getPostsByUserName } from "./posts";
 import {
@@ -29,6 +30,7 @@ import { getFeed, addFeedPage } from "./feed";
 
 export {
   loginUser,
+  verifyUser,
   addUser,
   getUser,
   createPost,

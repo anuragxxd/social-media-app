@@ -5,6 +5,9 @@ import { loginUser } from "../../actions";
 import { Link } from "react-router-dom";
 
 class Login extends Component {
+  state = {
+    loader: false,
+  };
   renderInput(formProps) {
     return (
       <div class="field">
@@ -22,8 +25,44 @@ class Login extends Component {
     );
   }
 
-  onSubmit = (formValues) => {
-    this.props.loginUser(formValues);
+  renderError = () => {
+    if (
+      this.props.user.login_error ==
+      "Error: Request failed with status code 400"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Wrong Credentials!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    } else if (
+      this.props.user.login_error ==
+      "Error: Request failed with status code 401"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Check mail for verification."
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    }
+  };
+
+  onSubmit = async (formValues) => {
+    this.setState({ loader: true });
+    await this.props.loginUser(formValues);
+    this.setState({ loader: false });
   };
 
   render() {
@@ -35,7 +74,7 @@ class Login extends Component {
         <div className="ui container" style={{ paddingTop: "20px" }}>
           <div
             class="ui placeholder segment"
-            style={{ height: "300px", backgroundColor: "#FFFFFF" }}
+            style={{ height: "350px", backgroundColor: "#FFFFFF" }}
           >
             <div class="ui two column very relaxed stackable grid">
               <div class="column">
@@ -59,10 +98,16 @@ class Login extends Component {
                     type="password"
                     placeholder="password"
                   ></Field>
-                  <button class="fluid ui blue submit button" type="submit">
+                  <button
+                    class={`fluid ui blue ${
+                      this.state.loader ? "disabled loading" : ""
+                    } submit button`}
+                    type="submit"
+                  >
                     Login
                   </button>
                 </form>
+                {this.renderError()}
               </div>
               <div class="small aligned column" style={{ paddingTop: "80px" }}>
                 <Link to="/create">
@@ -80,7 +125,13 @@ class Login extends Component {
   }
 }
 
-Login = connect(null, { loginUser })(Login);
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+Login = connect(mapStateToProps, { loginUser })(Login);
 
 export default reduxForm({
   form: "login",

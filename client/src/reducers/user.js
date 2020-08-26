@@ -14,6 +14,10 @@ export default (state = [], action) => {
       return action.payload;
     case "EDIT_AVATAR":
       return action.payload;
+    case "ERROR_LOGIN_USER":
+      return action.payload;
+    case "ERROR_CREATE_USER":
+      return action.payload;
     default:
       return state;
   }

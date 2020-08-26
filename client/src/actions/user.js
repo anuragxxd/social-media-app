@@ -2,21 +2,38 @@ import axios from "axios";
 import history from "../history";
 
 export const loginUser = (formValues) => async (dispatch) => {
-  const user = await axios.post("/api/users/login", formValues);
-  dispatch({
-    type: "LOGIN_USER",
-    payload: { ...user.data.user },
-  });
-  history.push("/feed");
+  try {
+    const user = await axios.post("/api/users/login", formValues);
+    dispatch({
+      type: "LOGIN_USER",
+      payload: { ...user.data.user },
+    });
+    history.push("/feed");
+  } catch (e) {
+    dispatch({
+      type: "ERROR_LOGIN_USER",
+      payload: { login_error: e.toString() },
+    });
+  }
 };
 
 export const addUser = (formValues) => async (dispatch) => {
-  await axios.post("/api/users", formValues);
+  try {
+    await axios.post("/api/users", formValues);
+    dispatch({
+      type: "ERROR_CREATE_USER",
+      payload: { create_success: "success" },
+    });
+  } catch (e) {
+    dispatch({
+      type: "ERROR_CREATE_USER",
+      payload: { create_error: e.toString() },
+    });
+  }
 };
 
 export const verifyUser = (token) => async (dispatch) => {
   const user = await axios.post(`/api/verify/${token}`);
-  console.log(user.data);
   dispatch({
     type: "VERIFY_USER",
     payload: user.data,

@@ -10,13 +10,21 @@ const jwt = require("jsonwebtoken");
 
 router.post("/api/users", async (req, res) => {
   try {
-    const user = new User(req.body);
-    await user.save();
-    const token = await user.createToken();
-    sendWelcomeEmail(user.email, user.name, token);
-    res.send({ user, token });
+    const userEmail = await User.findOne({ email: req.body.email });
+    const userUserName = await User.findOne({ userName: req.body.userName });
+    if (userEmail) {
+      res.status(400).send({ error: "Email already in use!" });
+    } else if (userUserName) {
+      res.status(401).send({ error: "UserName already taken!" });
+    } else {
+      const user = new User(req.body);
+      await user.save();
+      const token = await user.createToken();
+      sendWelcomeEmail(user.email, user.name, token);
+      res.status(201).send({ user, token });
+    }
   } catch (e) {
-    res.status(400).send(e);
+    res.status(403).send(e);
   }
 });
 
@@ -45,18 +53,21 @@ router.get("/api/users/:userName", async (req, res) => {
 
 router.post("/api/users/login", async (req, res) => {
   try {
-    console.log(req.body);
     const user = await User.findbyCreds(req.body.email, req.body.password);
-    const token = await user.createToken();
-    res.cookie("token", token, {
-      // maxAge: 60 * 60 * 1000,
-      httpOnly: true,
-      // secure: true,
-      // sameSite: true,
-    });
-    res.send({ user, token });
+    if (!user.verified) {
+      res.status(401).send({ error: "Please verify the account." });
+    } else {
+      const token = await user.createToken();
+      res.cookie("token", token, {
+        // maxAge: 60 * 60 * 1000,
+        httpOnly: true,
+        // secure: true,
+        // sameSite: true,
+      });
+      res.send({ user, token });
+    }
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send({ error: "Unable to Login." });
   }
 });
 

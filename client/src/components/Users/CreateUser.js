@@ -5,6 +5,9 @@ import { addUser } from "../../actions";
 import { Link } from "react-router-dom";
 
 class CreateUser extends Component {
+  state = {
+    loader: false,
+  };
   renderInput(formProps) {
     return (
       <div class="field">
@@ -36,8 +39,56 @@ class CreateUser extends Component {
     );
   };
 
+  renderError = () => {
+    if (
+      this.props.user.create_error ==
+      "Error: Request failed with status code 400"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Email already taken!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    } else if (
+      this.props.user.create_error ==
+      "Error: Request failed with status code 401"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Username already in use!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    } else if (this.props.user.create_success) {
+      return (
+        <form className="ui form">
+          <div class="field">
+            <input
+              className="disabled field"
+              value="Check mail to verify!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    }
+  };
+
   onSubmit = (formValues) => {
+    this.setState({ loader: true });
     this.props.addUser(formValues);
+    this.setState({ loader: false });
   };
 
   render() {
@@ -103,10 +154,16 @@ class CreateUser extends Component {
                   type="password"
                   placeholder="password"
                 ></Field>
-                <button class="fluid ui blue submit button" type="submit">
+                <button
+                  class={`fluid ui blue ${
+                    this.state.loader ? "disabled loading" : ""
+                  } submit button`}
+                  type="submit"
+                >
                   Create
                 </button>
               </form>
+              {this.renderError()}
               <br></br>
               <br></br>
               <Link to="/">
@@ -122,7 +179,13 @@ class CreateUser extends Component {
   }
 }
 
-CreateUser = connect(null, { addUser })(CreateUser);
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+CreateUser = connect(mapStateToProps, { addUser })(CreateUser);
 
 export default reduxForm({
   form: "createUser",

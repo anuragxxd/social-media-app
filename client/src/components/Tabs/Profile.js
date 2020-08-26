@@ -18,7 +18,6 @@ class Profile extends Component {
   };
 
   render() {
-    console.log(this.props.user);
     if (!this.props.user || this.props.user.length == 0) {
       this.getUser();
       return <div>Loading</div>;

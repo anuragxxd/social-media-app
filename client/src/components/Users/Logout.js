@@ -6,14 +6,20 @@ import history from "../../history";
 import { Link } from "react-router-dom";
 
 class Logout extends Component {
+  state = {
+    loader: false,
+  };
   renderActions = () => {
     return (
       <>
         <button
           onClick={() => {
+            this.setState({ loader: true });
             this.props.logoutUser();
           }}
-          className="ui button negative"
+          className={`ui ${
+            this.state.loader ? "disabled loading" : ""
+          } button negative`}
         >
           Logout
         </button>

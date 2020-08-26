@@ -43,6 +43,7 @@ export const verifyUser = (token) => async (dispatch) => {
 
 export const getUser = () => async (dispatch) => {
   const user = await axios.post("/api/users/me");
+  console.log(user);
   dispatch({
     type: "GET_USER",
     payload: user.data,

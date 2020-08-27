@@ -68,7 +68,11 @@ class EditProfile extends Component {
     return (
       <div class="field">
         <label>Avatar</label>
-        <input type="file" onChange={(e) => this.handleChange(e)} />
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/jpg"
+          onChange={(e) => this.handleChange(e)}
+        />
       </div>
     );
   }

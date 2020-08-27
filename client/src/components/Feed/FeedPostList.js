@@ -10,7 +10,7 @@ class FeedPostList extends Component {
     hasMore: true,
   };
   async componentDidMount() {
-    if (this.props.page == 1) {
+    if (this.props.page == 1 && this.props.feed.length == 0) {
       await this.props.getFeed(this.props.page, this.state.limit);
     }
     if (this.props.feed.length != this.state.limit * this.props.page) {

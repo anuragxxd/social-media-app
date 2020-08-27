@@ -7,6 +7,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const { sendWelcomeEmail } = require("../emails/account");
 const jwt = require("jsonwebtoken");
+const Friend = require("../models/friend");
 
 router.post("/api/users", async (req, res) => {
   try {
@@ -104,10 +105,30 @@ router.patch("/api/users", auth, async (req, res) => {
   if (!isValid) {
     return res.status(400).send("invalid data!!");
   }
-  if (req.body.caption.length > 50) {
-    return res.status(401).send("invalid data!!");
+  if (req.body.caption) {
+    if (req.body.caption.length > 50) {
+      return res.status(401).send("invalid data!!");
+    }
   }
+
   try {
+    if (req.body.userName) {
+      const posts = await Post.find({ owner: req.user.userName });
+      for (let post of posts) {
+        post.owner = req.body.userName;
+        await post.save();
+      }
+      const following = await Friend.find({ requestedBy: req.user.userName });
+      for (let connection of following) {
+        connection.requestedBy = req.body.userName;
+        await connection.save();
+      }
+      const followers = await Friend.find({ requestedTo: req.user.userName });
+      for (let connection of followers) {
+        connection.requestedTo = req.body.userName;
+        await connection.save();
+      }
+    }
     updates.forEach((update) => {
       req.user[update] = req.body[update];
     });

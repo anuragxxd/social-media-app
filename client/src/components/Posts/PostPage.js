@@ -4,6 +4,7 @@ import { getPost, likePost, getUser, commentPost } from "../../actions";
 import BackTo from "../Headers/BackTo";
 import PostPageComments from "./PostPageComments";
 import { Link } from "react-router-dom";
+import Loader from "../Loader.js";
 
 class PostPage extends Component {
   state = {
@@ -36,16 +37,19 @@ class PostPage extends Component {
   };
 
   renderBackTo = () => {
-    if (this.props.user.userName) {
+    if (this.props.user.userName == this.props.post.owner) {
       return <BackTo to="profile" toRoute="profile"></BackTo>;
+    } else if (this.props.user.userName) {
+      return <BackTo to="feed" toRoute="feed"></BackTo>;
     } else {
       return <BackTo to="login" toRoute=""></BackTo>;
     }
   };
 
   render() {
+    console.log(this.props.post);
     if (!this.props.post || !this.props.post.image) {
-      return <div>Loading</div>;
+      return <Loader></Loader>;
     }
     return (
       <div>
@@ -68,6 +72,9 @@ class PostPage extends Component {
                 />
               </div>
               <div class="content" style={{ paddingLeft: "30px" }}>
+                <div>
+                  <b>{this.props.post.owner}</b>
+                </div>
                 <div>{this.props.post.description}</div>
                 <div class="ui divider"></div>
                 <i

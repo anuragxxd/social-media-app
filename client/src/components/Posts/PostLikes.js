@@ -11,7 +11,6 @@ class PostLikes extends Component {
   }
 
   renderLike = (like) => {
-    console.log(like);
     return (
       <Link
         to={`/users/${like.userName}`}
@@ -46,7 +45,6 @@ class PostLikes extends Component {
   };
 
   render() {
-    console.log(this.props.likes);
     return (
       <Modal
         title={this.renderTitle()}

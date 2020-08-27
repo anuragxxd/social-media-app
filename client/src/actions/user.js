@@ -43,7 +43,6 @@ export const verifyUser = (token) => async (dispatch) => {
 
 export const getUser = () => async (dispatch) => {
   const user = await axios.post("/api/users/me");
-  console.log(user);
   dispatch({
     type: "GET_USER",
     payload: user.data,
@@ -59,12 +58,19 @@ export const logoutUser = () => async (dispatch) => {
 };
 
 export const editUser = (formValues) => async (dispatch) => {
-  const user = await axios.patch("/api/users", formValues);
-  dispatch({
-    type: "EDIT_USER",
-    payload: user.data,
-  });
-  history.push("/profile");
+  try {
+    const user = await axios.patch("/api/users", formValues);
+    dispatch({
+      type: "EDIT_USER",
+      payload: user.data,
+    });
+    history.push("/profile");
+  } catch (e) {
+    dispatch({
+      type: "ERROR_EDIT_USER",
+      payload: { edit_error: e.toString() },
+    });
+  }
 };
 
 export const editAvatar = (formdata) => async (dispatch) => {

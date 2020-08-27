@@ -31,6 +31,14 @@ class FeedPostList extends Component {
     );
   };
 
+  renderLoader = (text) => {
+    return (
+      <div class="ui center aligned segment" style={{ height: "50px" }}>
+        {text}
+      </div>
+    );
+  };
+
   render() {
     if (!this.props.feed) {
       return <>Loading </>;
@@ -41,12 +49,8 @@ class FeedPostList extends Component {
           dataLength={this.props.feed.length}
           next={this.fetchPosts}
           hasMore={this.state.hasMore}
-          loader={<h4>Loading..</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
+          loader={this.renderLoader("Loading...")}
+          endMessage={this.renderLoader("You have cleared that all...")}
         >
           {this.props.feed.map((post) => {
             return (

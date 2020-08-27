@@ -8,7 +8,14 @@ import BackTo from "../Headers/BackTo";
 class EditProfile extends Component {
   state = {
     image: null,
+    loader: false,
   };
+
+  async componentDidMount() {
+    if (!this.props.user || !this.props.user.userName) {
+      await this.props.getUser();
+    }
+  }
 
   renderInitialInput = (iv) => {
     if (iv) {
@@ -71,13 +78,47 @@ class EditProfile extends Component {
     await this.setState({ image: file });
   };
 
+  renderError = () => {
+    if (
+      this.props.user.edit_error == "Error: Request failed with status code 400"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Username already in use!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    } else if (
+      this.props.user.edit_error == "Error: Request failed with status code 401"
+    ) {
+      return (
+        <form className="ui form">
+          <div class="field error">
+            <input
+              className="disabled field"
+              value="Caption exceeds 50 characters!"
+              type="text"
+            />
+          </div>
+        </form>
+      );
+    }
+  };
+
   onSubmit = (formValues) => {
+    this.setState({ loader: true });
     this.props.editUser(formValues);
     if (this.state.image) {
       let formdata = new FormData();
       formdata.append("avatar", this.state.image);
       this.props.editAvatar(formdata);
     }
+    this.setState({ loader: false });
   };
 
   render() {
@@ -147,6 +188,7 @@ class EditProfile extends Component {
                   Update
                 </button>
               </form>
+              {this.renderError()}
               <br></br>
               <br></br>
             </div>

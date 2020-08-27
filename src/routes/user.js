@@ -104,7 +104,9 @@ router.patch("/api/users", auth, async (req, res) => {
   if (!isValid) {
     return res.status(400).send("invalid data!!");
   }
-
+  if (req.body.caption.length > 50) {
+    return res.status(401).send("invalid data!!");
+  }
   try {
     updates.forEach((update) => {
       req.user[update] = req.body[update];

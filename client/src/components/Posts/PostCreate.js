@@ -7,6 +7,7 @@ import BackTo from "../Headers/BackTo";
 class PostCreate extends Component {
   state = {
     image: null,
+    loader: false,
   };
 
   renderInput(formProps) {
@@ -37,6 +38,7 @@ class PostCreate extends Component {
   };
 
   onSubmit = async (formValues) => {
+    this.setState({ loader: true });
     let formdata = new FormData();
     formdata.append("postImage", this.state.image);
 
@@ -69,7 +71,12 @@ class PostCreate extends Component {
                 type="text"
                 placeholder="Life is what happens when you're busy making other plans."
               ></Field>
-              <button class="fluid ui blue submit button" type="submit">
+              <button
+                class={`fluid ui ${
+                  this.state.loader ? "disabled loading" : ""
+                } blue submit button`}
+                type="submit"
+              >
                 Create
               </button>
             </form>

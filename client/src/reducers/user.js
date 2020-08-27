@@ -18,6 +18,8 @@ export default (state = [], action) => {
       return action.payload;
     case "ERROR_CREATE_USER":
       return action.payload;
+    case "ERROR_EDIT_USER":
+      return { ...state, ...action.payload };
     default:
       return state;
   }

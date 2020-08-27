@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { getUser } from "../../actions";
 import Main from "../Headers/Main";
 import FeedPostList from "../Feed/FeedPostList";
+import Login from "../Users/Login";
+import Loader from "../Loader";
 
 class Feed extends Component {
   async componentDidMount() {
@@ -11,12 +13,18 @@ class Feed extends Component {
     }
   }
   render() {
-    return (
-      <div>
-        <Main></Main>
-        <FeedPostList></FeedPostList>
-      </div>
-    );
+    if (this.props.user.userName) {
+      return (
+        <div>
+          <Main></Main>
+          <FeedPostList></FeedPostList>
+        </div>
+      );
+    } else if (this.props.user.length == 0) {
+      return <Loader />;
+    } else {
+      return <Login></Login>;
+    }
   }
 }
 

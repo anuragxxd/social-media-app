@@ -1,15 +1,36 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getUser } from "../../actions";
 import Main from "../Headers/Main";
+import Login from "../Users/Login";
+import Loader from "../Loader";
 
 class Messages extends Component {
+  async componentDidMount() {
+    if (!this.props.user || this.props.user.length == 0) {
+      await this.props.getUser();
+    }
+  }
   render() {
-    return (
-      <div>
-        <Main></Main>
-        <div style={{ marginTop: "55px" }}> Coming Soon..</div>
-      </div>
-    );
+    if (this.props.user.userName) {
+      return (
+        <div>
+          <Main></Main>
+          <div style={{ marginTop: "55px" }}> Coming Soon..</div>
+        </div>
+      );
+    } else if (this.props.user.length == 0) {
+      return <Loader />;
+    } else {
+      return <Login></Login>;
+    }
   }
 }
 
-export default Messages;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, { getUser })(Messages);

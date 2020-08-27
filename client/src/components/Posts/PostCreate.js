@@ -27,7 +27,12 @@ class PostCreate extends Component {
     return (
       <div class="field">
         <label>Image</label>
-        <input type="file" required onChange={(e) => this.handleChange(e)} />
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/jpg"
+          required
+          onChange={(e) => this.handleChange(e)}
+        />
       </div>
     );
   }

@@ -84,7 +84,7 @@ router.post(
       owner: user.userName,
     });
     const image = await sharp(req.file.buffer)
-      .resize({ width: 500, height: 500 })
+      .resize({ width: 200, height: 200 })
       .png()
       .toBuffer();
     post.image = image;

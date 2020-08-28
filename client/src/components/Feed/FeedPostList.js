@@ -6,7 +6,7 @@ import PostCard from "../Posts/PostCard";
 
 class FeedPostList extends Component {
   state = {
-    limit: 3,
+    limit: 2,
     hasMore: true,
   };
   async componentDidMount() {

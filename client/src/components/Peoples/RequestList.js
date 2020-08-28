@@ -4,6 +4,10 @@ import { requestList, acceptRequest } from "../../actions";
 import { Link } from "react-router-dom";
 
 class RequestList extends Component {
+  state = {
+    loader: false,
+  };
+
   componentDidMount() {
     this.props.requestList();
   }
@@ -24,8 +28,11 @@ class RequestList extends Component {
               {request.requestedBy}
             </Link>
             <button
-              class="ui right floated primary mini button"
+              class={`ui right floated primary ${
+                this.state.loader ? "disabled loading" : ""
+              } mini button`}
               onClick={() => {
+                this.setState({ loader: true });
                 this.props.acceptRequest(request.requestedBy);
               }}
             >

@@ -156,7 +156,7 @@ router.get("/api/users/find/:query", auth, async (req, res) => {
 
 const upload = multer({
   limits: {
-    fileSize: 1000000,
+    // fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
     if (

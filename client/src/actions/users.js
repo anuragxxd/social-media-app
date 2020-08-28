@@ -19,7 +19,6 @@ export const requestList = () => async (dispatch) => {
 
 export const acceptRequest = (userName) => async (dispatch) => {
   const users = await axios.post(`/api/req/${userName}`);
-  console.log(users.data);
   dispatch({
     type: "ACCEPT_REQUEST",
     payload: users.data,

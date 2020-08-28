@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 class PostPageComments extends Component {
   state = {
     comment: "",
+    loader: false,
   };
 
   renderComment = (userName, body, id) => {
@@ -38,6 +39,7 @@ class PostPageComments extends Component {
 
   onComment = async (e) => {
     e.preventDefault();
+    this.setState({ loader: true });
     if (this.props.user.userName) {
       await this.props.commentPost(this.props.id, {
         body: this.state.comment,
@@ -47,6 +49,7 @@ class PostPageComments extends Component {
       alert("Login first");
       this.setState({ comment: "" });
     }
+    this.setState({ loader: false });
   };
 
   render() {
@@ -64,7 +67,9 @@ class PostPageComments extends Component {
           </div>
           <button
             type="submit"
-            class="ui blue labeled submit icon fluid small button"
+            class={`ui blue labeled submit icon fluid ${
+              this.state.loader ? "disabled loading" : ""
+            } small button`}
           >
             <i class="icon edit"></i> Add comment
           </button>

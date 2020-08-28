@@ -47,7 +47,6 @@ class PostPage extends Component {
   };
 
   render() {
-    console.log(this.props.post);
     if (!this.props.post || !this.props.post.image) {
       return <Loader></Loader>;
     }

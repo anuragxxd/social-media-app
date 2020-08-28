@@ -59,7 +59,6 @@ class Profile extends Component {
   };
 
   render() {
-    console.log(this.props.user);
     if (!this.props.user) {
       return <div>Loading</div>;
     }

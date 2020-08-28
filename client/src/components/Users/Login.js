@@ -69,7 +69,7 @@ class Login extends Component {
     return (
       <div>
         <h1 class="ui center aligned header" style={{ paddingTop: "200px" }}>
-          Social Media
+          Social Apes
         </h1>
         <div className="ui container" style={{ paddingTop: "20px" }}>
           <div

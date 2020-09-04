@@ -7,6 +7,7 @@ import axios from "axios";
 import history from "../../../history";
 import img from "../../../image/user.png";
 import { Link } from "react-router-dom";
+import Loader from "../../Loader";
 
 class Profile extends Component {
   state = {
@@ -61,7 +62,7 @@ class Profile extends Component {
 
   render() {
     if (!this.props.user) {
-      return <div>Loading</div>;
+      return <Loader></Loader>;
     }
     return (
       <div>

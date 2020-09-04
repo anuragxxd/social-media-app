@@ -6,6 +6,7 @@ import UserPostList from "./Posts/UserPostList";
 import axios from "axios";
 import history from "../../../history";
 import img from "../../../image/user.png";
+import { Link } from "react-router-dom";
 
 class Profile extends Component {
   state = {
@@ -116,7 +117,16 @@ class Profile extends Component {
                   {this.props.user.posts || "0"} Posts
                 </div>
                 <br></br>
-                {this.renderButton()}
+                <div class="two ui buttons">
+                  {this.renderButton()}
+                  <div class="or"></div>
+                  <Link
+                    to={`/message/${this.props.user.userName}`}
+                    class="ui button small fluid"
+                  >
+                    Message
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

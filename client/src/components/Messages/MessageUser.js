@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { getUser } from "../../actions";
 import MessageList from "./MessageList";
+import { Link } from "react-router-dom";
 
 class MessageUser extends Component {
   state = {
@@ -53,7 +54,12 @@ class MessageUser extends Component {
         <BackTo to="All messages" toRoute="messages"></BackTo>
         <div className="ui container">
           <h1 class="ui center aligned header" style={{ paddingTop: "55px" }}>
-            {this.props.match.params.userName}
+            <Link
+              to={`/users/${this.props.match.params.userName}`}
+              style={{ color: "black" }}
+            >
+              {this.props.match.params.userName}
+            </Link>
           </h1>
           <div
             class="ui segment"
@@ -67,6 +73,7 @@ class MessageUser extends Component {
                 <input
                   type="text"
                   onChange={(e) => this.setState({ message: e.target.value })}
+                  value={this.state.message}
                 />
                 <button class="ui button blue">
                   <i class="paper plane icon"></i>Send

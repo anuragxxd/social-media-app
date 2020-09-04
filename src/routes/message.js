@@ -43,7 +43,11 @@ router.get("/api/messageList/friends", auth, async (req, res) => {
 
     var unique = users.filter((v, i, a) => a.indexOf(v) === i);
 
-    res.send(unique);
+    const extraUserNames = userNames.filter(
+      (userName) => !unique.includes(userName)
+    );
+    const final = [...unique, ...extraUserNames];
+    res.send(final);
   } catch (e) {
     res.status(500).send(e);
   }

@@ -16,6 +16,9 @@ class MessageUserList extends Component {
 
   renderList = () => {
     if (this.state.list == "f") {
+      if (this.props.messageListFriend.length == 0) {
+        return <div>Nothing To Show..</div>;
+      }
       return this.props.messageListFriend.map((userName) => {
         return (
           <>
@@ -31,6 +34,9 @@ class MessageUserList extends Component {
         );
       });
     } else if (this.state.list == "r") {
+      if (this.props.messageListRequest.length == 0) {
+        return <div>Nothing To Show..</div>;
+      }
       return this.props.messageListRequest.map((userName) => {
         return (
           <>

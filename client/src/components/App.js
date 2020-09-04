@@ -17,6 +17,7 @@ import Followers from "./User/Stats/Followers";
 import Following from "./User/Stats/Following";
 import Messages from "./Tabs/Messages";
 import Verify from "./Users/Verify";
+import MessageUser from "./Messages/MessageUser.js";
 
 class App extends Component {
   render() {
@@ -52,6 +53,11 @@ class App extends Component {
             ></Route>
             <Route exact path="/messages" component={Messages}></Route>
             <Route exact path="/verify/:token" component={Verify}></Route>
+            <Route
+              exact
+              path="/message/:userName"
+              component={MessageUser}
+            ></Route>
           </Switch>
         </div>
       </Router>

@@ -12,6 +12,8 @@ import followers from "./followers";
 import following from "./following";
 import feed from "./feed";
 import feedPage from "./feedPage";
+import messageListFriends from "./messageListFriends";
+import messageListRequests from "./messageListRequests";
 
 export default combineReducers({
   form: formReducer,
@@ -27,4 +29,6 @@ export default combineReducers({
   following: following,
   feed: feed,
   feedPage: feedPage,
+  messageListFriends: messageListFriends,
+  messageListRequests: messageListRequests,
 });

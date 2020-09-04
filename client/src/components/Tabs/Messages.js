@@ -4,6 +4,7 @@ import { getUser } from "../../actions";
 import Main from "../Headers/Main";
 import Login from "../Users/Login";
 import Loader from "../Loader";
+import MessageUserList from "../Messages/MessageUserList";
 
 class Messages extends Component {
   async componentDidMount() {
@@ -16,7 +17,9 @@ class Messages extends Component {
       return (
         <div>
           <Main></Main>
-          <div style={{ marginTop: "55px" }}> Coming Soon..</div>
+          <div style={{ paddingTop: "55px" }}>
+            <MessageUserList></MessageUserList>
+          </div>
         </div>
       );
     } else if (this.props.user.length == 0) {

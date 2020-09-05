@@ -1,13 +1,24 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions";
+import { loginUser, getUser } from "../../actions";
 import { Link } from "react-router-dom";
+import history from "../../history";
 
 class Login extends Component {
   state = {
     loader: false,
   };
+
+  async componentDidMount() {
+    if (!this.props.user || this.props.user.length == 0) {
+      await this.props.getUser();
+    }
+    if (this.props.user.userName) {
+      history.push("/feed");
+    }
+  }
+
   renderInput(formProps) {
     return (
       <div class="field">
@@ -131,7 +142,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-Login = connect(mapStateToProps, { loginUser })(Login);
+Login = connect(mapStateToProps, { loginUser, getUser })(Login);
 
 export default reduxForm({
   form: "login",

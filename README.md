@@ -18,9 +18,9 @@ Instagram-like social media application that allow you to follow peoples and pos
 
 $ git clone https://github.com/git-anurag-hub/social-media-app
 $ cd social-media-app
-$ npm inastall
+$ npm install
 $ cd client
-$ npm inastall
+$ npm install
 
 # in root folder 
 

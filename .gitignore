@@ -1,2 +1,3 @@
 node_modules
-config/
+config/dev.env
+client/config/dev.env

@@ -4,10 +4,27 @@ import { connect } from "react-redux";
 import { createPost, uploadImage } from "../../actions";
 import BackTo from "../Headers/BackTo";
 
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileValidateType);
+
 class PostCreate extends Component {
   state = {
     image: null,
     loader: false,
+    files: [
+      {
+        source: "index.html",
+        options: {
+          type: "local"
+        }
+      }
+    ]
   };
 
   renderInput(formProps) {
@@ -26,26 +43,29 @@ class PostCreate extends Component {
   renderImage() {
     return (
       <div class="field">
-        <label>Image</label>
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/jpg"
+        <FilePond
+          ref={ref => (this.pond = ref)}
+          allowMultiple={false}
+          allowReorder={false}
+          name="files"
+          allowFileTypeValidation={true}
+          acceptedFileTypes= {['image/png','image/jpeg','image/jpg']}
           required
-          onChange={(e) => this.handleChange(e)}
+          onupdatefiles={fileItems => {
+            // Set currently active file objects to this.state
+            this.setState({
+              files: fileItems.map(fileItem => fileItem.file)
+            });
+          }}
         />
       </div>
     );
   }
 
-  handleChange = async (e) => {
-    const file = e.target.files[0];
-    await this.setState({ image: file });
-  };
-
   onSubmit = async (formValues) => {
     this.setState({ loader: true });
     let formdata = new FormData();
-    formdata.append("postImage", this.state.image);
+    formdata.append("postImage", this.state.files[0]);
 
     await this.props.createPost(formValues);
     await this.props.uploadImage(this.props.post._id, formdata);
@@ -61,7 +81,7 @@ class PostCreate extends Component {
         <div className="ui container" style={{ paddingTop: "20px" }}>
           <div
             class="ui placeholder segment"
-            style={{ height: "400px", backgroundColor: "#FFFFFF" }}
+            style={{ height: "50%", backgroundColor: "#FFFFFF" }}
           >
             <form
               className="ui form"

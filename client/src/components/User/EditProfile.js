@@ -5,10 +5,27 @@ import { getUser, editUser, editAvatar } from "../../actions";
 import { Link } from "react-router-dom";
 import BackTo from "../Headers/BackTo";
 
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileValidateType);
+
 class EditProfile extends Component {
   state = {
     image: null,
     loader: false,
+    files: [
+      {
+        source: "index.html",
+        options: {
+          type: "local"
+        }
+      }
+    ]
   };
 
   async componentDidMount() {
@@ -68,19 +85,23 @@ class EditProfile extends Component {
     return (
       <div class="field">
         <label>Avatar</label>
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/jpg"
-          onChange={(e) => this.handleChange(e)}
+        <FilePond
+          ref={ref => (this.pond = ref)}
+          allowMultiple={false}
+          allowReorder={false}
+          name="files"
+          allowFileTypeValidation={true}
+          acceptedFileTypes= {['image/png','image/jpeg','image/jpg']}
+          onupdatefiles={fileItems => {
+            // Set currently active file objects to this.state
+            this.setState({
+              files: fileItems.map(fileItem => fileItem.file)
+            });
+          }}
         />
       </div>
     );
   }
-
-  handleChange = async (e) => {
-    const file = e.target.files[0];
-    await this.setState({ image: file });
-  };
 
   renderError = () => {
     if (
@@ -117,9 +138,9 @@ class EditProfile extends Component {
   onSubmit = (formValues) => {
     this.setState({ loader: true });
     this.props.editUser(formValues);
-    if (this.state.image) {
+    if (this.state.files[0]) {
       let formdata = new FormData();
-      formdata.append("avatar", this.state.image);
+      formdata.append("avatar", this.state.files[0]);
       this.props.editAvatar(formdata);
     }
     this.setState({ loader: false });
@@ -135,7 +156,7 @@ class EditProfile extends Component {
         <div className="ui container" style={{ paddingTop: "20px" }}>
           <div
             class="ui placeholder segment"
-            style={{ height: "750px", backgroundColor: "#FFFFFF" }}
+            style={{ height: "50%", backgroundColor: "#FFFFFF" }}
           >
             <div class="column">
               <form

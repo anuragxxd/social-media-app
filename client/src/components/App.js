@@ -25,7 +25,7 @@ class App extends Component {
       <Router history={history}>
         <div>
           <Switch>
-            <Route exact path="/" component={Login}></Route>
+            <Route exact path="/" component={Feed}></Route>
             <Route exact path="/create" component={CreateUser}></Route>
             <Route exact path="/feed" component={Feed}></Route>
             <Route exact path="/profile" component={Profile}></Route>

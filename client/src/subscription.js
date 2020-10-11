@@ -1,5 +1,5 @@
 const convertedVapidKey = urlBase64ToUint8Array(
-    process.env.REACT_APP_PUBLIC_VAPID_KEY
+    'BG3FkvM0LHZlqRVUk7MclNYpkEBC3CWrw04R42AmogCONngtaB0ZCVbQWnfqIPTRLSZeSWIany5IltLFxj26PIc'
 )
 
 function urlBase64ToUint8Array(base64String) {

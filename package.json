@@ -25,7 +25,8 @@
     "nodemon": "^2.0.4",
     "sharp": "^0.25.4",
     "socket.io": "^2.3.0",
-    "validator": "^13.1.1"
+    "validator": "^13.1.1",
+    "web-push": "^3.4.4"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0"

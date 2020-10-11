@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import dayjs from "dayjs";
+import moment from "moment";
 import { connect } from "react-redux";
 import { likePost, commentPost } from "../../actions";
 import { Link } from "react-router-dom";
 
 class PostCard extends Component {
-  const relativeTime = require("dayjs/plugin/relativeTime");
-  dayjs.extends(relativeTime);
-
   state = {
     liked: false,
     comment: "",
@@ -36,7 +33,7 @@ class PostCard extends Component {
       <div className={`ui fluid card`}>
         <div className="content">
           <div className="right floated meta">
-            {dayjs(this.props.createdAt).endOf("min").fromNow()}
+            {moment(this.props.createdAt).endOf("min").fromNow()}
           </div>{" "}
           {this.props.owner}
         </div>

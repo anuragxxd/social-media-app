@@ -27,3 +27,4 @@ $ npm install
 $ npm run dev
 
 ```
+[![pas](https://img.shields.io/static/v1?&message=ProgressiveApp.Store&color=74b9ff&style=flat&label=Follow%20Social%20Apes%20at)](https://progressiveapp.store/pwa/Social-Apes)

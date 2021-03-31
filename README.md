@@ -1,6 +1,7 @@
 # social-media-app
 
-This is an open-source Instagram-like social media application that allow you to follow peoples and post images to keep in touch with your friends. Feel free to contribute to this project and help us to increase it's reach.
+This Project focuses on connecting the people from around the world. Users can find the people wih their same interest send them friend-request & messages. Also users can post the images and their thoughts which will be shown to their friends. This is an open-source project contributors can work on any issue they like. Solving issues marked with tag `Hacktober` will be counted as Hacktoberfest contributions. Feel free to open issue for any other information.
+Happy contribution.
 
 ### Used stack 
 

@@ -1,6 +1,6 @@
 # Social Apes
 
-This Project focuses on connecting the people from around the world. Users can find the people wih their same interest send them friend-request & messages. Also users can post the images and their thoughts which will be shown to their friends. This is an open-source project contributors can work on any issue they like. Solving issues marked with tag `Hacktoberfest` will be counted as Hacktoberfest contributions. Feel free to open issue for any other information.
+This Project focuses on connecting the people from around the world. Users can find the people with their same interest send them friend-request & messages. Also users can post the images and their thoughts which will be shown to their friends. This is an open-source project contributors can work on any issue they like. Solving issues marked with tag `Hacktoberfest` will be counted as Hacktoberfest contributions. Feel free to open issue for any other information.
 Happy contribution.
 
 ### Used stack 

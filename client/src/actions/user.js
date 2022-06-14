@@ -1,9 +1,10 @@
 import axios from "axios";
 import history from "../history";
-
+const API = 'api';
+const API_ROUTE_PATH = 'users';
 export const loginUser = (formValues) => async (dispatch) => {
   try {
-    const user = await axios.post("/api/users/login", formValues);
+    const user = await axios.post(`/${API}/${API_ROUTE_PATH}/login`, formValues);
     dispatch({
       type: "LOGIN_USER",
       payload: { ...user.data.user },
@@ -19,7 +20,7 @@ export const loginUser = (formValues) => async (dispatch) => {
 
 export const addUser = (formValues) => async (dispatch) => {
   try {
-    await axios.post("/api/users", formValues);
+    await axios.post(`/${API}/${API_ROUTE_PATH}`, formValues);
     dispatch({
       type: "ERROR_CREATE_USER",
       payload: { create_success: "success" },
@@ -33,7 +34,7 @@ export const addUser = (formValues) => async (dispatch) => {
 };
 
 export const verifyUser = (token) => async (dispatch) => {
-  const user = await axios.post(`/api/verify/${token}`);
+  const user = await axios.post(`/${API}/verify/${token}`);
   dispatch({
     type: "VERIFY_USER",
     payload: user.data,
@@ -42,7 +43,7 @@ export const verifyUser = (token) => async (dispatch) => {
 };
 
 export const getUser = () => async (dispatch) => {
-  const user = await axios.post("/api/users/me");
+  const user = await axios.post(`/${API}/${API_ROUTE_PATH}/me`);
   dispatch({
     type: "GET_USER",
     payload: user.data,
@@ -50,7 +51,7 @@ export const getUser = () => async (dispatch) => {
 };
 
 export const logoutUser = () => async (dispatch) => {
-  await axios.post("/api/users/logout");
+  await axios.post(`/${API}/${API_ROUTE_PATH}/logout`);
   dispatch({
     type: "LOGOUT_USER",
   });
@@ -59,7 +60,7 @@ export const logoutUser = () => async (dispatch) => {
 
 export const editUser = (formValues) => async (dispatch) => {
   try {
-    const user = await axios.patch("/api/users", formValues);
+    const user = await axios.patch(`/${API}/${API_ROUTE_PATH}`, formValues);
     dispatch({
       type: "EDIT_USER",
       payload: user.data,
@@ -74,7 +75,7 @@ export const editUser = (formValues) => async (dispatch) => {
 };
 
 export const editAvatar = (formdata) => async (dispatch) => {
-  const user = await axios.post("/api/users/me/avatar", formdata);
+  const user = await axios.post(`/${API}/${API_ROUTE_PATH}/me/avatar`, formdata);
   dispatch({
     type: "EDIT_AVATAR",
     payload: user.data,
